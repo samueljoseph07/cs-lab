@@ -1,0 +1,52 @@
+
+import socket
+import threading
+import hashlib
+
+def start_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host = '127.0.0.1'
+    port = 9999
+    server_socket.bind((host, port))
+    server_socket.listen(5)
+    print(f'Server started on {host}:{port}')
+    
+    while True:
+        client_socket, addr = server_socket.accept()
+        print(f'Got a connection from {addr}')
+        data = client_socket.recv(1024).decode('utf-8')
+        print(f'Received from client: {data}')
+        data1=hashlib.md5(b'data').hexdigest()
+        print(f'Hashed value: {data1}')
+        response = 'Thank you for connecting'
+        client_socket.send(response.encode('utf-8'))
+        client_socket.close()
+
+
+server_thread = threading.Thread(target=start_server, daemon=True)
+server_thread.start()
+
+Server started on 127.0.0.1:9999
+
+
+import socket
+
+def start_client():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host = '127.0.0.1'
+    port = 9999
+    client_socket.connect((host, port))
+    message = input("Enter text: ")
+    client_socket.send(message.encode('utf-8'))
+    response = client_socket.recv(1024).decode('utf-8')
+    print(f'Received from server: {response}')
+    client_socket.close()
+
+start_client()
+
+
+Got a connection from ('127.0.0.1', 65430)
+Enter text: Hello 
+Received from client: Hello 
+Hashed value: 8d777f385d3dfec8815d20f7496026dc
+Received from server: Thank you for connecting
