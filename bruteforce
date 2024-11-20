@@ -1,0 +1,26 @@
+import string
+import itertools
+
+def bruteforce_attack(password, max_attempts=2000000):
+    chars = string.printable.strip()
+    attempts = 0
+
+    for length in range(1, len(password) + 1):
+        for guess in itertools.product(chars, repeat=length):
+            attempts += 1
+            guess = ''.join(guess)
+            if attempts >= max_attempts:
+                return (attempts, None)
+            if guess == password:
+                return (attempts, guess)
+
+    return (attempts, None)
+
+password = "abc"
+max_attempts = 2000000
+attempts, cracked_password = bruteforce_attack(password, max_attempts)
+
+if cracked_password:
+    print(f"Password cracked! It took {attempts} attempts: {cracked_password}")
+else:
+    print(f"Password could not be cracked within {attempts} attempts.")
