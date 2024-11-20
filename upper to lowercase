@@ -1,5 +1,3 @@
-#Client server upper to lowercase
-
 import socket
 import threading
 
@@ -24,6 +22,11 @@ def start_server():
 server_thread = threading.Thread(target=start_server, daemon=True)
 server_thread.start()
 
+
+Server started on 127.0.0.1:9999
+
+
+
 import socket
 
 def start_client():
@@ -38,3 +41,12 @@ def start_client():
     client_socket.close()
 
 start_client()
+
+
+Got a connection from ('127.0.0.1', 64529)
+Received from client: hello, server!
+Received from server: thank you for connecting
+Got a connection from ('127.0.0.1', 64552)
+Received from client: khoorqvhuyhu
+Got a connection from ('127.0.0.1', 64556)
+Received from client: khoorqvhuyhu
